@@ -1,5 +1,5 @@
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery, Contact
+from aiogram.types import Message, CallbackQuery, FSInputFile#InputMediaPhoto, Contact
 from aiogram import Router, F, Bot
 from aiogram.filters import Command
 import re
@@ -101,6 +101,27 @@ async def get_time(call: CallbackQuery, state: FSMContext, requests: Requests):
 
 
 
+@rout.message(F.text == "/catalog")
+async def get_photo_catalog(message: Message, bot: Bot):
+    """"
+    Создать кнопку для показа след. фото без цикла в хендерах. Там же можем использовать
+    сетку для вывода красивого интерфейса фотографий(в виде сетки 3х3 или 3х4)
+    """
+    media = [
+        FSInputFile("image/photo_2025-06-18_06-59-26.jpg"),
+        FSInputFile("image/photo_2025-06-18_06-59-28.jpg"),
+        FSInputFile("image/photo_2025-06-18_06-59-30.jpg"),
+        FSInputFile("image/photo_2025-06-18_07-00-01.jpg"),
+        FSInputFile("image/photo_2025-06-18_07-00-08.jpg"),
+        FSInputFile("image/photo_2025-06-18_07-00-11.jpg"),
+        FSInputFile("image/photo_2025-06-18_07-00-14.jpg")
+    ]
+    
+    for i in media:
+        await message.answer_photo(i)
+
+
+
 @rout.message(States.state_name)
 async def get_data(message: Message, state: FSMContext, requests: Requests): 
     await message.answer(f'Приятно познакомится {message.text}, выберите дату: ', 
@@ -127,7 +148,6 @@ async def check_phone(message: Message, state: FSMContext, bot: Bot, requests: R
                       message.text)
     if not result:
         return await message.answer('Это не похоже на номер телефона, попробуйте еще раз!')
-    
     await state.update_data(hand_enter_number= message.text)
     await message.answer('Спасибо за ваш заказ! Ваши данные переданы менеджеру, ожидайте звонка! ')
     

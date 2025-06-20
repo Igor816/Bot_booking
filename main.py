@@ -34,6 +34,11 @@ async def comm(bot: Bot):
             command='/start',
             description='поехали'
             
+        ),
+        BotCommand(
+            command='/catalog',
+            description='Каталог'
+            
         )
     ]
     await bot.set_my_commands(command, BotCommandScopeDefault())
