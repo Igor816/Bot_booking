@@ -2,10 +2,7 @@
 from datetime import datetime as dt, timedelta, time, date
 
 import asyncpg
-from asyncpg import Connection
 
-# import psycopg
-# from psycopg import Connection
 
 from data.config import settin
 from data.settings import async_engine
@@ -28,7 +25,7 @@ async def database_entry():
     await pool.close()
 
 
-async def get_count_row(conn: Connection):
+async def get_count_row(conn: asyncpg.Connection):
     count = await conn.fetchrow("SELECT COUNT(*) FROM booking")
     return count[0]
 

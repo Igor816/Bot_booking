@@ -1,5 +1,5 @@
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery, FSInputFile#InputMediaPhoto, Contact
+from aiogram.types import Message, CallbackQuery, FSInputFile#, Contact
 from aiogram import Router, F, Bot
 from aiogram.filters import Command
 import re
@@ -9,7 +9,7 @@ from others.requests import Requests
 from others.state_user import States
 from others.data_user import get_data_state, get_data_for_admin, db_get_service_price
 
-from keyboard.keybordbutton import get_button_name, kb_get_date, get_kb_time#, get_number
+from keyboard.keybordbutton import get_button_name, kb_get_date, get_kb_time, kb_next_photo#, get_number
 from keyboard.services_button import kb_get_services, kb_get_add_services
 from keyboard.edit_keyboards import delete_button, buy_button
 from keyboard.admin_keyboards import admin_button
@@ -102,23 +102,18 @@ async def get_time(call: CallbackQuery, state: FSMContext, requests: Requests):
 
 
 @rout.message(F.text == "/catalog")
-async def get_photo_catalog(message: Message, bot: Bot):
-    """"
-    Создать кнопку для показа след. фото без цикла в хендерах. Там же можем использовать
-    сетку для вывода красивого интерфейса фотографий(в виде сетки 3х3 или 3х4)
-    """
-    media = [
-        FSInputFile("image/photo_2025-06-18_06-59-26.jpg"),
-        FSInputFile("image/photo_2025-06-18_06-59-28.jpg"),
-        FSInputFile("image/photo_2025-06-18_06-59-30.jpg"),
-        FSInputFile("image/photo_2025-06-18_07-00-01.jpg"),
-        FSInputFile("image/photo_2025-06-18_07-00-08.jpg"),
-        FSInputFile("image/photo_2025-06-18_07-00-11.jpg"),
-        FSInputFile("image/photo_2025-06-18_07-00-14.jpg")
-    ]
-    
-    for i in media:
-        await message.answer_photo(i)
+async def get_photo_catalog(message: Message):
+    media = (
+        "image/photo_2025-06-18_06-59-26.jpg",
+        "image/photo_2025-06-18_06-59-28.jpg",
+        "image/photo_2025-06-18_06-59-30.jpg",
+        "image/photo_2025-06-18_07-00-01.jpg",
+        "image/photo_2025-06-18_07-00-08.jpg",
+        "image/photo_2025-06-18_07-00-11.jpg",
+        "image/photo_2025-06-18_07-00-14.jpg"
+        )
+    for i in range(len(media)):
+        await message.answer_photo(FSInputFile(media[i]))
 
 
 

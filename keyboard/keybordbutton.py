@@ -32,19 +32,6 @@ async def get_button_name(name):
 #             input_field_placeholder='Нажмите на кнопку'
 #         )
 
-async def kb_next_photo():
-    keybords = InlineKeyboardBuilder()
-    keybords.add(
-        InlineKeyboardButton(
-            text='Вперед',
-            callback_data='next'
-        ),
-        InlineKeyboardButton(
-            text='Назад',
-            callback_data='back'
-        )
-    )
-    
     
     
 
