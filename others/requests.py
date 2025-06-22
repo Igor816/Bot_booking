@@ -6,7 +6,6 @@ class Requests:
     def __init__(self, conn):
         self.conn = conn
 
-
     
     
     async def db_get_date(self):
@@ -68,6 +67,8 @@ class Requests:
         
         await self.conn.execute(query, {"status": status, "date": date_, "time": time_})
         
+        
+        
     async def db_paste_serv_price(self, serv_, price_, date, time):
         date_ = datetime.strptime(date, "%d.%m.%Y")
         time_ = datetime.strptime(time, "%H:%M")
@@ -81,3 +82,13 @@ class Requests:
                      """)
         await self.conn.execute(query, {"serv": serv_, "price":price_, 
                                         "date":date_, "time": time_})
+        
+        
+        
+    async def db_get_phone(self, user_id, numbers):
+        query = text("""
+                     UPDATE users
+                     SET phone_link=:numbers
+                     WHERE telegram_id =:user_id
+                     """)
+        await self.conn.execute(query, {"user_id": user_id, "numbers":numbers})

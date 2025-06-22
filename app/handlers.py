@@ -154,8 +154,9 @@ async def check_phone(message: Message, state: FSMContext, bot: Bot, requests: R
     data = await state.get_data()
     date_needed = data['state_date']
     time_needed = data['state_time']
+    number = data["hand_enter_number"]
     
-    
+    await requests.db_get_phone(message.from_user.id, number)
     await bot.send_message(chat_id=settin.ID_admin, text=await get_data_for_admin(state),
                            reply_markup= await admin_button(date_needed, time_needed, 
                                                             message.from_user.id))
